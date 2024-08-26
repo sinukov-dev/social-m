@@ -1,11 +1,16 @@
 .sidebar {
-	@apply flex items-center justify-between flex-col border-r h-full py-24 w-64;
+	@apply flex items-center justify-between flex-col border-r h-full py-24 w-100;
 	border-color: rgba(255, 255, 255, 0.1);
 	a {
 		svg {
 			@apply text-g600 duration-200;
 		}
 		&:hover {
+			svg {
+				@apply text-white;
+			}
+		}
+		&.active {
 			svg {
 				@apply text-white;
 			}
