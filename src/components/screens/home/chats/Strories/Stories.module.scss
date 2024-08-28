@@ -1,0 +1,18 @@
+.item {
+	cursor: pointer;
+	transition: 0.2s;
+	& > div:first-child {
+		transition: 0.2s;
+	}
+	&_self {
+		&:hover {
+			opacity: 0.7;
+			& > div:first-child {
+				transform: rotate(180deg);
+			}
+		}
+	}
+	&:hover {
+		opacity: 0.7;
+	}
+}

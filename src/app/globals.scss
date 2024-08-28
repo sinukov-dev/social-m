@@ -16,16 +16,47 @@
 	}
 }
 
-body,
 html {
-	// background: linear-gradient(
-	// 		to bottom,
-	// 		transparent,
-	// 		rgb(var(--background-end-rgb))
-	// 	)
-	// 	rgb(var(--background-start-rgb));
 	@apply text-white bg-black;
 	height: 100%;
+	position: relative;
+	&:before {
+		content: '';
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('/assets/img/general/main-bg.jpg') 50% 50% no-repeat;
+		background-size: cover;
+	}
+}
+body {
+	@apply text-white backdrop-blur-3xl	 bg-black/85;
+	height: 100%;
+}
+
+input {
+	outline: none;
+}
+
+.dynamic-grid {
+	max-width: 100%;
+	& > * {
+		display: flex;
+		flex-wrap: nowrap;
+		overflow-scrolling: touch;
+		-webkit-overflow-scrolling: touch;
+		overflow-y: auto;
+		margin-left: -16px;
+		margin-right: -16px;
+		padding-left: 16px;
+		padding-right: 16px;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 }
 
 @layer utilities {

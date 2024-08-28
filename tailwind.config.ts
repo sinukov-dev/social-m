@@ -4,7 +4,6 @@ module.exports = {
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
-
 		// Or if using `src` directory:
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
@@ -17,6 +16,18 @@ module.exports = {
 			'4': '4px',
 			'6': '6px',
 			'8': '8px',
+		},
+		fontSize: {
+			'48': ['48px', '140%'],
+			'40': ['40px', '140%'],
+			'32': ['32px', '140%'],
+			'24': ['24px', '140%'],
+			'20': ['20px', '140%'],
+			'18': ['18px', '140%'],
+			'16': ['16px', '140%'],
+			'14': ['14px', '140%'],
+			'12': ['12px', '140%'],
+			'10': ['10px', '140%'],
 		},
 		extend: {
 			colors: {
@@ -35,12 +46,14 @@ module.exports = {
 				g500: '#B5B9C5',
 				g600: '#a5a5a5',
 				g700: '#969696',
-				g800: '#6A7186',
+				g800: '#848484',
 				g900: '#6d6d6d',
 				g1000: '#5f5f5f',
 				g1100: '#4b4b4b',
 				g1200: '#383838',
 				g1300: '#242424',
+				g1400: '#1b1b1b',
+				g1500: '#121212',
 			},
 			width: {
 				'4': '4px',
@@ -77,7 +90,7 @@ module.exports = {
 				'10': '32px',
 			},
 			spacing: {
-				layout: '24px',
+				layout: '20px',
 				'4': '4px',
 				'8': '8px',
 				'12': '12px',
