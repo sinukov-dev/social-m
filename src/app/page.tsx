@@ -14,14 +14,14 @@ export default function ChatsPage() {
 	const [name, setName] = useState('')
 	const [error, setEror] = useState<any>('')
 	const [loadingUser, setLoadingUser] = useState(true)
-
 	useEffect(() => {
 		async function getUser() {
 			try {
+				console.log(await account.get())
 				setLoggedInUser(await account.get())
 				setLoadingUser(false)
 			} catch (e: any) {
-				setEror(e.message)
+				setEror('')
 				setLoadingUser(false)
 			}
 		}
@@ -33,6 +33,7 @@ export default function ChatsPage() {
 			setLoggedInUser(await account.get())
 			setEmail('')
 			setPassword('')
+			setEror('')
 		} catch (e: any) {
 			console.error(e)
 			setEror(e.message)
