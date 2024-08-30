@@ -11,7 +11,6 @@ const currentUser = {
 	name: 'Carter Domonaui',
 	desc: 'Frontend developer',
 }
-
 export function CurrentUser() {
 	return (
 		<div className={`p-layout border-b border-white/10 flex items-center justify-between`}>
@@ -30,8 +29,8 @@ export function CurrentUser() {
 					></div>
 				</div>
 				<div>
-					<div className={`text-16 text-bold text-white`}>{currentUser.name}</div>
-					<div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div>
+					{/* <div className={`text-16 text-bold text-white`}>{name}</div> */}
+					{/* <div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div> */}
 				</div>
 			</div>
 			<div className={`py-16`}>

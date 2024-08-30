@@ -33,6 +33,7 @@ export default function ChatsPage() {
 			setLoggedInUser(await account.get())
 			setEmail('')
 			setPassword('')
+			setEror('')
 		} catch (e: any) {
 			console.error(e)
 			setEror(e.message)
