@@ -7,17 +7,14 @@ import { usePathname } from 'next/navigation'
 import { MENU } from './Sidebar.data'
 import styles from './Sidebar.module.scss'
 
+const isLoggedIn = false
+
 export function Sidebar() {
 	const pathName = usePathname()
+	if (!isLoggedIn) return null
 	return (
 		<aside className={styles.sidebar}>
-			<Image
-				src={'/assets/img/general/logo.svg'}
-				priority
-				width={50}
-				height={50}
-				alt=''
-			/>
+			<Image src={'/assets/img/general/logo.svg'} priority width={50} height={50} alt='' />
 			<div className={styles.menu}>
 				{MENU.map(item => (
 					<Link

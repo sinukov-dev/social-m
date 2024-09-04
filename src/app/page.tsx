@@ -60,7 +60,7 @@ export default function ChatsPage() {
 	}
 
 	if (loadingUser) {
-		return <p className='text-white font-semibold text-lg'>Loading user...</p>
+		return <p className='text-white font-semibold text-lg'>Loading...</p>
 	}
 
 	if (loggedInUser) {
@@ -68,7 +68,7 @@ export default function ChatsPage() {
 			<div className={`flex flex-col`}>
 				<button
 					onClick={logout}
-					className='w-full m-3 p-3 bg-red-600 hover:bg-red-700 text-white rounded-md focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50'
+					className='max-w-full m-3 p-3 bg-red-600 hover:bg-red-700 text-white rounded-md focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50'
 				>
 					Logout
 				</button>
