@@ -3,7 +3,10 @@
 import Input from '@/components/ui/input/input'
 import { useEffect, useState } from 'react'
 import { account, ID } from '@/app/appwrite'
-import { AtSign, KeyRound } from 'lucide-react'
+import { AtSign, KeyRound, User2Icon } from 'lucide-react'
+import { Button } from '@/components/ui/button/button'
+import Link from 'next/link'
+import { Loader } from '@/components/ui/loader/loader'
 
 type IAuth = {
 	type?: 'login' | 'register'
@@ -62,12 +65,104 @@ export function Auth({ type }: IAuth) {
 	}
 
 	if (loadingUser) {
-		return <p className='text-white font-semibold text-lg'>Loading...</p>
+		return (
+			<div className={`absolute pos-50-50`}>
+				<Loader />
+			</div>
+		)
 	}
 	return (
 		<>
-			<Input placeholder={'Enter email'} type='email' Icon={AtSign} />
-			<Input placeholder={'Enter passWord'} type='password' Icon={KeyRound} />
+			<div
+				className={`px-32 py-48 max-w-full gap-32 h-full flex flex-col items-center justify-center`}
+			>
+				{type === 'login' ? (
+					<div className={`flex items-center justify-center flex-col`}>
+						<p className={`text-48 font-bold`}>Log In</p>
+						<p className={`text-16 text-center font-light text-g700`}>
+							Don't have an account?
+							<Link
+								href='login'
+								className={`ml-8 font-bold hover:underline text-white`}
+							>
+								Sign In
+							</Link>
+						</p>
+					</div>
+				) : (
+					<div className={`flex items-center justify-center flex-col`}>
+						<p className={`text-48 font-bold`}>Sign Up</p>
+						<p className={`text-16 text-center font-light text-g700`}>
+							Already have an account?
+							<Link
+								href='login'
+								className={`ml-8 font-bold hover:underline text-white`}
+							>
+								Sign In
+							</Link>
+						</p>
+					</div>
+				)}
+				{error ? (
+					<div className={`w-[500px] bg-red-600/10 p-16 rounded-4 text-red-500`}>
+						{error}
+					</div>
+				) : (
+					''
+				)}
+
+				<form className={`flex flex-col items-center w-[500px] justify-center gap-16`}>
+					<Input
+						placeholder={'Enter email'}
+						type='email'
+						Icon={AtSign}
+						// error={{ message: `Email is invalid`, type: 'min' }}
+					/>
+
+					<Input
+						placeholder={'Enter passWord'}
+						type='password'
+						Icon={KeyRound}
+						// error={{ message: `Password is invalid`, type: 'min' }}
+					/>
+
+					<Input
+						placeholder={'Enter Name'}
+						type='text'
+						Icon={User2Icon}
+						// error={{ message: `Password is invalid`, type: 'min' }}
+					/>
+					{type === 'login' ? (
+						<div className={`flex w-full justify-between mt-24`}>
+							<Button type={'button'} className='w-50%'>
+								Log In
+							</Button>
+							<div className={`w-50% w-full flex items-center justify-center`}>
+								<Link
+									href='/signup'
+									className={`transition-opacity hover:opacity-70`}
+								>
+									Sign Up
+								</Link>
+							</div>
+						</div>
+					) : (
+						<div className={`flex w-full justify-between mt-24`}>
+							<Button type={'button'} className='w-50%'>
+								Sign Up
+							</Button>
+							<div className={`w-50% w-full flex items-center justify-center`}>
+								<Link
+									href='/login'
+									className={`transition-opacity hover:opacity-70`}
+								>
+									Log In
+								</Link>
+							</div>
+						</div>
+					)}
+				</form>
+			</div>
 		</>
 	)
 }

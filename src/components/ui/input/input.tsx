@@ -20,14 +20,19 @@ const Input = forwardRef<HTMLInputElement, TInput>(
 	) => {
 		// const [type, setType] = useState<HTMLInputTypeAttribute | undefined>(initialType || 'text')
 
+		console.log
+
 		return (
-			<div className={cn(styles.field, className)} style={style}>
+			<div
+				className={cn(styles.input, className, { [styles['input-with-icon']]: Icon })}
+				style={style}
+			>
+				<input ref={ref} type={type} {...rest} />
 				{Icon && (
 					<div className={styles.icon}>
 						<Icon />
 					</div>
 				)}
-				<input ref={ref} type={type} {...rest} />
 				{error && <div className={styles.error}> {error.message}</div>}
 				{/* {isEyeIcon && (
 					<button

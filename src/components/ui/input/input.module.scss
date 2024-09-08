@@ -1,0 +1,15 @@
+.input {
+	@apply h-64 w-full;
+	input {
+		@apply bg-transparent placeholder:text-g900 placeholder:transition-colors focus:placeholder:text-transparent w-full border-b border-white h-full;
+	}
+	&-with-icon {
+		@apply relative;
+		input {
+			@apply pl-48;
+		}
+		& > div {
+			@apply absolute to-50% left-8 pos-y-50;
+		}
+	}
+}

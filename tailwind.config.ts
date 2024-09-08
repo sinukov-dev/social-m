@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
 	content: [
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -114,5 +116,34 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		plugin(function ({ addUtilities }: any) {
+			addUtilities({
+				'.pos-50-50': {
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+				},
+			})
+		}),
+		plugin(function ({ addUtilities }: any) {
+			addUtilities({
+				'.pos-y-50': {
+					position: 'absolute',
+					top: '50%',
+					transform: 'translateY(-50%)',
+				},
+			})
+		}),
+		plugin(function ({ addUtilities }: any) {
+			addUtilities({
+				'.pos-x-50': {
+					position: 'absolute',
+					left: '50%',
+					transform: 'translateX(-50%)',
+				},
+			})
+		}),
+	],
 }

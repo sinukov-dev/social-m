@@ -5,7 +5,7 @@ import { Auth } from '@/components/screens/auth/Auth'
 
 export const metadata: Metadata = {
 	title: 'Login',
-	...NO_INDEX_PAGE,
+	...NO_INDEX_PAGE
 }
 
 export default function LoginPage() {

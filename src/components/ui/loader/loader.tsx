@@ -5,7 +5,7 @@ import styles from './loader.module.scss'
 export function Loader() {
 	return (
 		<div className={styles.loader}>
-			<Loader2 />
+			<Loader2 size={50} />
 		</div>
 	)
 }

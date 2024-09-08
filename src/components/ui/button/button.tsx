@@ -1,17 +1,25 @@
-import { InputHTMLAttributes } from 'react'
+import Link from 'next/link'
 import { Loader } from '../loader/loader'
-import { Link } from 'lucide-react'
+import { TButton, TLink } from './button.types'
+import cn from 'clsx'
+import styles from './button.module.scss'
 
-interface IButton extends InputHTMLAttributes<HTMLButtonElement> {
-	isLoading?: boolean
-	type: string
-}
-interface ILink extends InputHTMLAttributes<HTMLLinkElement> {
-	isLoading?: boolean
-	type: string
-}
+export function Button(props: TButton | TLink) {
+	const { isLoading, type, children, className } = props
 
-export function Button({ isLoading, type, children }: IButton | ILink) {
-	if (type === 'button') return <button>{isLoading ? <Loader /> : children}</button>
-	if (type === 'link') return <Link>{isLoading ? <Loader /> : children}</Link>
+	if (type === 'button') {
+		return (
+			<button className={cn(styles.button, className)} type='submit'>
+				{isLoading ? <Loader /> : children}
+			</button>
+		)
+	}
+
+	if (type === 'link') {
+		return (
+			<Link className={cn(styles.button, className)} href={props.href}>
+				{isLoading ? <Loader /> : children}
+			</Link>
+		)
+	}
 }
