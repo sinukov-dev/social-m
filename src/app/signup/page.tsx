@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo-constants'
-import { Auth } from '@/components/screens/auth/Auth'
+import { SignUp } from '@/components/screens/signup/signup'
 
 export const metadata: Metadata = {
 	title: 'Sign Up',
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SignUpPage() {
 	return (
 		<>
-			<Auth type='register' />
+			<SignUp />
 		</>
 	)
 }

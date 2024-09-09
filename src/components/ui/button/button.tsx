@@ -9,7 +9,7 @@ export function Button(props: TButton | TLink) {
 
 	if (type === 'button') {
 		return (
-			<button className={cn(styles.button, className)} type='submit'>
+			<button className={cn(styles.button, className)}>
 				{isLoading ? <Loader /> : children}
 			</button>
 		)

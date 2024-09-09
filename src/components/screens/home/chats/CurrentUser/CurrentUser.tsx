@@ -1,17 +1,38 @@
 import Image from 'next/image'
 import styles from './Chats.module.scss'
 import { MoreHorizontal } from 'lucide-react'
+import { useAuth } from '@/context/AuthContext'
+import { useEffect, useState } from 'react'
+import { Models } from 'appwrite'
 
 const currentUser = {
 	image: {
 		src: 'https://placebeard.it/250/250',
 		width: 100,
-		height: 200,
+		height: 200
 	},
 	name: 'Carter Domonaui',
-	desc: 'Frontend developer',
+	desc: 'Frontend developer'
 }
 export function CurrentUser() {
+	const { user, logout } = useAuth()
+
+	useEffect(() => {
+		console.log('User data:', user)
+	}, [user])
+
+	const handleLogout = async () => {
+		try {
+			await logout()
+		} catch (error) {
+			console.error('Login failed', error)
+		}
+	}
+
+	if (!user) {
+		return <p>Loading...</p>
+	}
+
 	return (
 		<div className={`p-layout border-b border-white/10 flex items-center justify-between`}>
 			<div className={`flex items-center gap-16`}>
@@ -29,11 +50,14 @@ export function CurrentUser() {
 					></div>
 				</div>
 				<div>
-					{/* <div className={`text-16 text-bold text-white`}>{name}</div> */}
-					{/* <div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div> */}
+					<div className={`text-16 text-bold text-white`}> {user.name}</div>
+					<div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div>
 				</div>
 			</div>
 			<div className={`py-16`}>
+				<div onClick={handleLogout} className={`p-24 bg-white text-black`}>
+					logout
+				</div>
 				<MoreHorizontal />
 			</div>
 		</div>

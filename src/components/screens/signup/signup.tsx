@@ -8,11 +8,7 @@ import { Button } from '@/components/ui/button/button'
 import Link from 'next/link'
 import { Loader } from '@/components/ui/loader/loader'
 
-type IAuth = {
-	type?: 'login' | 'register'
-}
-
-export function Auth({ type }: IAuth) {
+export function SignUp() {
 	const [loggedInUser, setLoggedInUser] = useState<any>(null)
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -76,33 +72,15 @@ export function Auth({ type }: IAuth) {
 			<div
 				className={`px-32 py-48 max-w-full gap-32 h-full flex flex-col items-center justify-center`}
 			>
-				{type === 'login' ? (
-					<div className={`flex items-center justify-center flex-col`}>
-						<p className={`text-48 font-bold`}>Log In</p>
-						<p className={`text-16 text-center font-light text-g700`}>
-							Don't have an account?
-							<Link
-								href='login'
-								className={`ml-8 font-bold hover:underline text-white`}
-							>
-								Sign In
-							</Link>
-						</p>
-					</div>
-				) : (
-					<div className={`flex items-center justify-center flex-col`}>
-						<p className={`text-48 font-bold`}>Sign Up</p>
-						<p className={`text-16 text-center font-light text-g700`}>
-							Already have an account?
-							<Link
-								href='login'
-								className={`ml-8 font-bold hover:underline text-white`}
-							>
-								Sign In
-							</Link>
-						</p>
-					</div>
-				)}
+				<div className={`flex items-center justify-center flex-col`}>
+					<p className={`text-48 font-bold`}>Sign Up</p>
+					<p className={`text-16 text-center font-light text-g700`}>
+						Already have an account?
+						<Link href='login' className={`ml-8 font-bold hover:underline text-white`}>
+							Log In
+						</Link>
+					</p>
+				</div>
 				{error ? (
 					<div className={`w-[500px] bg-red-600/10 p-16 rounded-4 text-red-500`}>
 						{error}
@@ -117,6 +95,8 @@ export function Auth({ type }: IAuth) {
 						type='email'
 						Icon={AtSign}
 						// error={{ message: `Email is invalid`, type: 'min' }}
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 
 					<Input
@@ -124,6 +104,8 @@ export function Auth({ type }: IAuth) {
 						type='password'
 						Icon={KeyRound}
 						// error={{ message: `Password is invalid`, type: 'min' }}
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 
 					<Input
@@ -131,36 +113,19 @@ export function Auth({ type }: IAuth) {
 						type='text'
 						Icon={User2Icon}
 						// error={{ message: `Password is invalid`, type: 'min' }}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
 					/>
-					{type === 'login' ? (
-						<div className={`flex w-full justify-between mt-24`}>
-							<Button type={'button'} className='w-50%'>
+					<div className={`flex w-full justify-between mt-24`}>
+						<Button type={'button'} className='w-50%' onClick={register}>
+							Sign Up
+						</Button>
+						<div className={`w-50% w-full flex items-center justify-center`}>
+							<Link href='/login' className={`transition-opacity hover:opacity-70`}>
 								Log In
-							</Button>
-							<div className={`w-50% w-full flex items-center justify-center`}>
-								<Link
-									href='/signup'
-									className={`transition-opacity hover:opacity-70`}
-								>
-									Sign Up
-								</Link>
-							</div>
+							</Link>
 						</div>
-					) : (
-						<div className={`flex w-full justify-between mt-24`}>
-							<Button type={'button'} className='w-50%'>
-								Sign Up
-							</Button>
-							<div className={`w-50% w-full flex items-center justify-center`}>
-								<Link
-									href='/login'
-									className={`transition-opacity hover:opacity-70`}
-								>
-									Log In
-								</Link>
-							</div>
-						</div>
-					)}
+					</div>
 				</form>
 			</div>
 		</>

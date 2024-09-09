@@ -6,7 +6,6 @@ import { Stories } from './chats/Strories/Stories'
 import styles from './Home.module.scss'
 
 export function Home() {
-	console.log(name)
 	return (
 		<div className={`flex h-full`}>
 			<div className={`flex flex-col w-1/3 border-r border-white/10 min-w-[400px]`}>
