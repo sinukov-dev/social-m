@@ -6,22 +6,23 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MENU } from './Sidebar.data'
 import styles from './Sidebar.module.scss'
-
-const isLoggedIn = false
+import { useAuth } from '@/context/AuthContext'
 
 export function Sidebar() {
+	const { user } = useAuth()
 	const pathName = usePathname()
-	if (!isLoggedIn) return null
+	if ('') return null
+	// if (!user) return null
 	return (
 		<aside className={styles.sidebar}>
 			<Image src={'/assets/img/general/logo.svg'} priority width={50} height={50} alt='' />
 			<div className={styles.menu}>
-				{MENU.map(item => (
+				{MENU.map((item) => (
 					<Link
 						key={item.url}
 						href={`${item.url}`}
 						className={cn({
-							[styles.active]: pathName === item.url,
+							[styles.active]: pathName === item.url
 						})}
 					>
 						<item.icon size={30} />

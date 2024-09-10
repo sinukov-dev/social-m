@@ -9,6 +9,7 @@ interface AuthContextType {
 	login: (email: string, password: string) => Promise<void>
 	register: (email: string, password: string, name: string) => Promise<void>
 	logout: () => Promise<void>
+	error: string | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -33,15 +34,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			try {
 				const currentUser = await account.get()
 				setUser(currentUser)
-			} catch (error) {
-				console.error('Error fetching user:', error)
-				setUser(null)
-				router.push('/login')
+			} catch (error: any) {
+				if (error.code === 401) {
+					setUser(null)
+					router.push('/login')
+				} else {
+					setEror(error.message)
+				}
 			}
 		}
 
 		fetchUser()
-	}, [])
+	}, [user])
 
 	const login = async (email: string, password: string) => {
 		try {
@@ -52,17 +56,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			setPassword('')
 			setEror('')
 			router.push('/')
-		} catch (error) {
-			console.error('Login error:', error)
+		} catch (error: any) {
+			setEror(error.message)
 		}
 	}
 
 	const register = async (email: string, password: string, name: string) => {
 		try {
 			await account.create('unique()', email, password, name)
-			await login(email, password) // Автоматический логин после регистрации
-		} catch (error) {
-			console.error('Registration error:', error)
+			await login(email, password)
+		} catch (error: any) {
+			setEror(error.message)
 		}
 	}
 
@@ -70,14 +74,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		try {
 			await account.deleteSession('current')
 			setUser(null)
+			router.push('/')
 		} catch (error: any) {
-			console.error('Logout error:', error)
 			setEror(error.message)
 		}
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, login, register, logout }}>
+		<AuthContext.Provider value={{ user, login, register, logout, error }}>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -8,13 +8,13 @@ import styles from './Home.module.scss'
 export function Home() {
 	return (
 		<div className={`flex h-full`}>
-			<div className={`flex flex-col w-1/3 border-r border-white/10 min-w-[400px]`}>
+			<div className={styles.sidebar}>
 				<CurrentUser />
 				<Search />
 				<Stories />
 				<ChatList />
 			</div>
-			<div className={`w-full h-full `}>
+			<div className={`w-full h-full`}>
 				<Chat />
 			</div>
 		</div>

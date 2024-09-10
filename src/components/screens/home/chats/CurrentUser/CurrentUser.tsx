@@ -1,9 +1,6 @@
 import Image from 'next/image'
-import styles from './Chats.module.scss'
 import { MoreHorizontal } from 'lucide-react'
-import { useAuth } from '@/context/AuthContext'
-import { useEffect, useState } from 'react'
-import { Models } from 'appwrite'
+import { useAuthStatus } from '@/hooks/useAuthCheck'
 
 const currentUser = {
 	image: {
@@ -11,26 +8,15 @@ const currentUser = {
 		width: 100,
 		height: 200
 	},
-	name: 'Carter Domonaui',
+	name: 'Carter Domonaui', // Замените это если ваше поле пользователя другое
 	desc: 'Frontend developer'
 }
+
 export function CurrentUser() {
-	const { user, logout } = useAuth()
+	const { user, handleLogout, renderLoader } = useAuthStatus()
 
-	useEffect(() => {
-		console.log('User data:', user)
-	}, [user])
-
-	const handleLogout = async () => {
-		try {
-			await logout()
-		} catch (error) {
-			console.error('Login failed', error)
-		}
-	}
-
-	if (!user) {
-		return <p>Loading...</p>
+	if (renderLoader()) {
+		return renderLoader()
 	}
 
 	return (
@@ -50,7 +36,7 @@ export function CurrentUser() {
 					></div>
 				</div>
 				<div>
-					<div className={`text-16 text-bold text-white`}> {user.name}</div>
+					<div className={`text-16 text-bold text-white`}> {user?.name}</div>
 					<div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div>
 				</div>
 			</div>
