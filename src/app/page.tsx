@@ -1,27 +1,27 @@
 'use client'
+
 import { Home } from '@/components/screens/home/Home'
 import { PageLoader } from '@/components/ui/loader/pageloader'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-export default function ChatsPage() {
+export default function HomePage() {
+	const { user, loading } = useAuth()
 	const router = useRouter()
-	const { user } = useAuth()
-
-	const [loading, setLoading] = useState(true)
-
-	//checking auth status
 	useEffect(() => {
-		if (user === null) {
-			router.push('/login')
-		} else if (user) {
-			setLoading(false)
-		}
-	}, [user])
+		console.log('loading:', loading, 'user:', user)
 
-	if (loading) {
+		if (!loading) {
+			if (!user) {
+				router.replace('/login')
+			}
+		}
+	}, [user, loading, router])
+
+	if (loading || !user) {
 		return <PageLoader />
 	}
+
 	return <Home />
 }

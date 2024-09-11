@@ -1,11 +1,14 @@
 'use client'
+
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import { account } from '../app/appwrite'
 import { Models } from 'appwrite'
 import { useRouter } from 'next/navigation'
+import { PageLoader } from '@/components/ui/loader/pageloader'
 
 interface AuthContextType {
 	user: Models.User<{}> | null
+	loading: boolean
 	login: (email: string, password: string) => Promise<void>
 	register: (email: string, password: string, name: string) => Promise<void>
 	logout: () => Promise<void>
@@ -23,41 +26,41 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+	console.log('error 0')
+
 	const [user, setUser] = useState<Models.User<{}> | null>(null)
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [error, setEror] = useState<any>('')
+	const [error, setError] = useState<any>('')
+	const [loading, setLoading] = useState(true)
 	const router = useRouter()
 
 	useEffect(() => {
+		console.log('error 1')
 		const fetchUser = async () => {
+			console.log('error 2')
 			try {
+				console.log('error 3')
 				const currentUser = await account.get()
 				setUser(currentUser)
 			} catch (error: any) {
-				if (error.code === 401) {
-					setUser(null)
-					router.push('/login')
-				} else {
-					setEror(error.message)
-				}
+				console.log('error 4')
+				setUser(null)
+			} finally {
+				setLoading(false)
 			}
 		}
 
 		fetchUser()
-	}, [user])
+	}, [])
 
 	const login = async (email: string, password: string) => {
 		try {
 			await account.createEmailPasswordSession(email, password)
 			const currentUser = await account.get()
 			setUser(currentUser)
-			setEmail('')
-			setPassword('')
-			setEror('')
-			router.push('/')
+			setError('')
+			router.replace('/')
 		} catch (error: any) {
-			setEror(error.message)
+			setError(error.message)
 		}
 	}
 
@@ -66,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			await account.create('unique()', email, password, name)
 			await login(email, password)
 		} catch (error: any) {
-			setEror(error.message)
+			setError(error.message)
 		}
 	}
 
@@ -74,14 +77,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		try {
 			await account.deleteSession('current')
 			setUser(null)
-			router.push('/')
+			router.replace('/login')
 		} catch (error: any) {
-			setEror(error.message)
+			setError(error.message)
 		}
 	}
 
+	if (loading) {
+		return <PageLoader />
+	}
+
 	return (
-		<AuthContext.Provider value={{ user, login, register, logout, error }}>
+		<AuthContext.Provider value={{ user, loading, login, register, logout, error }}>
 			{children}
 		</AuthContext.Provider>
 	)

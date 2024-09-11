@@ -3,16 +3,29 @@ import cn from 'clsx'
 import { Sun } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { MENU } from './Sidebar.data'
 import styles from './Sidebar.module.scss'
 import { useAuth } from '@/context/AuthContext'
+import { useEffect } from 'react'
 
 export function Sidebar() {
 	const { user } = useAuth()
+	const router = useRouter()
+
 	const pathName = usePathname()
-	if ('') return null
-	// if (!user) return null
+
+	useEffect(() => {
+		console.log('loading:', 'user:', user)
+
+		if (!user) {
+			router.replace('/login')
+		}
+	}, [user, router])
+
+	if (!user) {
+		return ''
+	}
 	return (
 		<aside className={styles.sidebar}>
 			<Image src={'/assets/img/general/logo.svg'} priority width={50} height={50} alt='' />

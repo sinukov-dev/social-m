@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { MoreHorizontal } from 'lucide-react'
-import { useAuthStatus } from '@/hooks/useAuthCheck'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
 
 const currentUser = {
 	image: {
@@ -13,12 +15,23 @@ const currentUser = {
 }
 
 export function CurrentUser() {
-	const { user, handleLogout, renderLoader } = useAuthStatus()
+	const { user, logout } = useAuth()
 
-	if (renderLoader()) {
-		return renderLoader()
+	useEffect(() => {
+		console.log('User data:', user)
+	}, [user])
+
+	const handleLogout = async () => {
+		try {
+			await logout()
+		} catch (error) {
+			console.error('Login failed', error)
+		}
 	}
 
+	if (!user) {
+		return <p>Loading...</p>
+	}
 	return (
 		<div className={`p-layout border-b border-white/10 flex items-center justify-between`}>
 			<div className={`flex items-center gap-16`}>
