@@ -26,23 +26,17 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	console.log('error 0')
-
 	const [user, setUser] = useState<Models.User<{}> | null>(null)
 	const [error, setError] = useState<any>('')
 	const [loading, setLoading] = useState(true)
 	const router = useRouter()
 
 	useEffect(() => {
-		console.log('error 1')
 		const fetchUser = async () => {
-			console.log('error 2')
 			try {
-				console.log('error 3')
 				const currentUser = await account.get()
 				setUser(currentUser)
 			} catch (error: any) {
-				console.log('error 4')
 				setUser(null)
 			} finally {
 				setLoading(false)

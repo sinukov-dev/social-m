@@ -6,26 +6,22 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { MENU } from './Sidebar.data'
 import styles from './Sidebar.module.scss'
-import { useAuth } from '@/context/AuthContext'
-import { useEffect } from 'react'
+import { useRequireAuth } from '@/hooks/useRequireAuth'
 
-export function Sidebar() {
-	const { user } = useAuth()
-	const router = useRouter()
+interface SidebarProps {
+	blockedPages: string[]
+}
 
+export function Sidebar({ blockedPages }: SidebarProps) {
 	const pathName = usePathname()
 
-	useEffect(() => {
-		console.log('loading:', 'user:', user)
+	const { user, loading } = useRequireAuth(false)
+	if (loading || !user) return null
 
-		if (!user) {
-			router.replace('/login')
-		}
-	}, [user, router])
-
-	if (!user) {
-		return ''
+	if (blockedPages.includes(pathName)) {
+		return null
 	}
+
 	return (
 		<aside className={styles.sidebar}>
 			<Image src={'/assets/img/general/logo.svg'} priority width={50} height={50} alt='' />
