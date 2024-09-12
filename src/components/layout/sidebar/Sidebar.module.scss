@@ -1,5 +1,5 @@
 .sidebar {
-	@apply flex items-center justify-between flex-col border-r h-full py-24 w-100 border-white/10 min-w-[100px];
+	@apply flex items-center justify-between flex-col border-r h-screen py-24 w-100 border-white/10 min-w-[100px];
 	a {
 		svg {
 			@apply text-g600 duration-200;

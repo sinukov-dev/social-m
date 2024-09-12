@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin')
+const { nextui } = require('@nextui-org/react')
 
 module.exports = {
 	content: [
@@ -8,6 +9,7 @@ module.exports = {
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
 		// Or if using `src` directory:
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
+		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
 	],
 	theme: {
 		borderWidth: {
@@ -17,7 +19,7 @@ module.exports = {
 			'3': '3px',
 			'4': '4px',
 			'6': '6px',
-			'8': '8px',
+			'8': '8px'
 		},
 		fontSize: {
 			'48': ['48px', '140%'],
@@ -29,7 +31,7 @@ module.exports = {
 			'16': ['16px', '140%'],
 			'14': ['14px', '140%'],
 			'12': ['12px', '140%'],
-			'10': ['10px', '140%'],
+			'10': ['10px', '140%']
 		},
 		extend: {
 			colors: {
@@ -55,7 +57,7 @@ module.exports = {
 				g1200: '#383838',
 				g1300: '#242424',
 				g1400: '#1b1b1b',
-				g1500: '#121212',
+				g1500: '#121212'
 			},
 			width: {
 				'4': '4px',
@@ -77,7 +79,7 @@ module.exports = {
 				'72': '72px',
 				'80': '80px',
 				'100': '100px',
-				'120': '120px',
+				'120': '120px'
 			},
 			borderRadius: {
 				'1': '2px',
@@ -89,7 +91,7 @@ module.exports = {
 				'7': '16px',
 				'8': '20px',
 				'9': '24px',
-				'10': '32px',
+				'10': '32px'
 			},
 			spacing: {
 				layout: '20px',
@@ -112,10 +114,11 @@ module.exports = {
 				'72': '72px',
 				'80': '80px',
 				'100': '100px',
-				'120': '120px',
-			},
-		},
+				'120': '120px'
+			}
+		}
 	},
+	darkMode: 'class',
 	plugins: [
 		plugin(function ({ addUtilities }: any) {
 			addUtilities({
@@ -123,8 +126,8 @@ module.exports = {
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
-					transform: 'translate(-50%, -50%)',
-				},
+					transform: 'translate(-50%, -50%)'
+				}
 			})
 		}),
 		plugin(function ({ addUtilities }: any) {
@@ -132,8 +135,8 @@ module.exports = {
 				'.pos-y-50': {
 					position: 'absolute',
 					top: '50%',
-					transform: 'translateY(-50%)',
-				},
+					transform: 'translateY(-50%)'
+				}
 			})
 		}),
 		plugin(function ({ addUtilities }: any) {
@@ -141,9 +144,48 @@ module.exports = {
 				'.pos-x-50': {
 					position: 'absolute',
 					left: '50%',
-					transform: 'translateX(-50%)',
-				},
+					transform: 'translateX(-50%)'
+				}
 			})
 		}),
-	],
+		nextui({
+			themes: {
+				light: {
+					colors: {
+						background: '#FFFFFF', // or DEFAULT
+						foreground: '#222222', // or 50 to 900 DEFAULT
+						primary: {
+							//... 50 to 900
+							foreground: '#222222',
+							DEFAULT: '#353535'
+						}
+						// ... rest of the colors
+					}
+				},
+				dark: {
+					colors: {
+						background: '#222222', // or DEFAULT
+						foreground: '#FFFFFF', // or 50 to 900 DEFAULT
+						primary: {
+							//... 50 to 900
+							foreground: '#353535',
+							DEFAULT: '#353535'
+						}
+					}
+					// ... rest of the colors
+				}
+				// mytheme: {
+				// 	// custom theme
+				// 	extend: 'dark',
+				// 	colors: {
+				// 		primary: {
+				// 			DEFAULT: '#BEF264',
+				// 			foreground: '#000000'
+				// 		},
+				// 		focus: '#BEF264'
+				// 	}
+				// }
+			}
+		})
+	]
 }

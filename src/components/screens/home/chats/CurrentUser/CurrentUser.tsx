@@ -3,6 +3,8 @@ import { MoreHorizontal } from 'lucide-react'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { Button, Popover, PopoverContent, PopoverTrigger, User } from '@nextui-org/react'
+import Link from 'next/link'
 
 const currentUser = {
 	image: {
@@ -17,16 +19,8 @@ const currentUser = {
 export function CurrentUser() {
 	const { user, logout } = useAuth()
 
-	useEffect(() => {
-		console.log('User data:', user)
-	}, [user])
-
 	const handleLogout = async () => {
-		try {
-			await logout()
-		} catch (error) {
-			console.error('Login failed', error)
-		}
+		await logout()
 	}
 
 	if (!user) {
@@ -34,31 +28,46 @@ export function CurrentUser() {
 	}
 	return (
 		<div className={`p-layout border-b border-white/10 flex items-center justify-between`}>
-			<div className={`flex items-center gap-16`}>
-				<div className={`relative`}>
-					<div className={`w-56 h-56 overflow-hidden rounded-full`}>
-						<Image
-							src={`${currentUser.image.src}`}
-							alt={'Image'}
-							width={currentUser.image.width}
-							height={currentUser.image.height}
-						/>
+			<User
+				name={user?.name}
+				description={currentUser.desc}
+				avatarProps={{
+					src: currentUser.image.src,
+					size: 'lg'
+				}}
+				classNames={{
+					name: 'text-18 font-medium',
+					description: 'font-light opacity-60',
+					base: 'gap-16',
+					wrapper: 'gap-4'
+				}}
+			/>
+			<div className={`py-16`}></div>
+			<Popover placement='bottom' color={`foreground`} showArrow={true}>
+				<PopoverTrigger>
+					<div className={`p-8 pr-0 cursor-pointer hover:opacity-70 transition-opacity`}>
+						<MoreHorizontal />
 					</div>
-					<div
-						className={`online-checker bg-green-600 w-16 h-16 rounded-5 border-3 border-black absolute bottom-0 right-0`}
-					></div>
-				</div>
-				<div>
-					<div className={`text-16 text-bold text-white`}> {user?.name}</div>
-					<div className={`text-14 text-normal text-g1000`}>{currentUser.desc}</div>
-				</div>
-			</div>
-			<div className={`py-16`}>
-				<div onClick={handleLogout} className={`p-24 bg-white text-black`}>
-					logout
-				</div>
-				<MoreHorizontal />
-			</div>
+				</PopoverTrigger>
+				<PopoverContent>
+					<div className='px-1 py-2 w-[160px]'>
+						<ul className={`mb-16`}>
+							<li className={`p-8 border-b border-g1100`}>
+								<Link href='/settings'>Settings</Link>
+							</li>
+							<li className={` p-8 border-b border-g1100`}>
+								<Link href='/friends'>My friends</Link>
+							</li>
+						</ul>
+						<Button
+							onClick={handleLogout}
+							className={`px-16 py-8 text-white font-bold bg-red-600 rounded-2 w-full flex justify-center items-center cursor-pointer`}
+						>
+							Logout
+						</Button>
+					</div>
+				</PopoverContent>
+			</Popover>
 		</div>
 	)
 }
