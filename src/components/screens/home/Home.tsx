@@ -1,5 +1,5 @@
 import { Chat } from './chats/Chat/Chat'
-import { ChatList } from './chats/ChatList/ChatList'
+import ChatList from './chats/ChatList/ChatList'
 import { CurrentUser } from './chats/CurrentUser/CurrentUser'
 import { Search } from './chats/Search/Search'
 import { Stories } from './chats/Strories/Stories'

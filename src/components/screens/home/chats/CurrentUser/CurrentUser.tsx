@@ -22,10 +22,6 @@ export function CurrentUser() {
 	const handleLogout = async () => {
 		await logout()
 	}
-
-	if (!user) {
-		return <p>Loading...</p>
-	}
 	return (
 		<div className={`p-layout border-b border-white/10 flex items-center justify-between`}>
 			<User
