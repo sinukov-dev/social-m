@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
-import { account } from '../app/appwrite'
+import { account, databases, ID } from '../app/appwrite'
 import { Models } from 'appwrite'
 import { useRouter } from 'next/navigation'
 import { PageLoader } from '@/components/ui/loader/pageloader'
@@ -60,8 +60,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	const register = async (email: string, password: string, name: string) => {
 		try {
-			await account.create('unique()', email, password, name)
+			const userAccount = await account.create('unique()', email, password, name)
 			await login(email, password)
+
+			console.log(userAccount.$id)
+			// const currentTimeInSeconds = Math.floor(Date.now() / 1000)
+			await databases.createDocument(
+				process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+				'66e4403b003cc6e56518', // ID коллекции "Users"
+				userAccount.$id, // Уникальный ID документа
+				{
+					chats: '[]',
+					name: name,
+					createdAt: '20:00'
+				},
+				['read("user:' + userAccount.$id + '")', 'write("user:' + userAccount.$id + '")']
+			)
 		} catch (error: any) {
 			setError(error.message)
 		}
