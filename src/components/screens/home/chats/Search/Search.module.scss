@@ -1,0 +1,23 @@
+.search {
+	@apply dark bg-transparent h-64;
+	div {
+		@apply h-64 p-0;
+		&:after {
+			@apply h-[1px];
+		}
+	}
+	input {
+		@apply h-64 pl-64;
+	}
+	svg {
+		display: none;
+	}
+}
+.container {
+	@apply bg-foreground;
+}
+.wrapper {
+	[data-slot='input-wrapper'] {
+		border-bottom: 0 solid red !important;
+	}
+}

@@ -17,7 +17,6 @@ type ChatItemProps = {
 	data: TUser
 }
 export function ChatItem({ data }: ChatItemProps) {
-	console.log(data)
 	return (
 		<Link
 			href='/chat'

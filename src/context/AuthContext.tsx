@@ -5,6 +5,7 @@ import { account, databases, ID } from '../app/appwrite'
 import { Models } from 'appwrite'
 import { useRouter } from 'next/navigation'
 import { PageLoader } from '@/components/ui/loader/pageloader'
+import { userDataJSON } from '@/data/user'
 
 interface AuthContextType {
 	user: Models.User<{}> | null
@@ -30,7 +31,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [error, setError] = useState<any>('')
 	const [loading, setLoading] = useState(true)
 	const router = useRouter()
-
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 				'66e4403b003cc6e56518', // ID коллекции "Users"
 				userAccount.$id, // Уникальный ID документа
 				{
-					chats: '[]',
+					chats: JSON.stringify(userDataJSON.chats),
 					name: name,
 					createdAt: '20:00'
 				},
